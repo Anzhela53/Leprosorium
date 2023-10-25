@@ -15,11 +15,11 @@ end
 
 configure do
 	init_db
-	@db.execute 'CREATE TABLE IF NOT EXISTS "Posts" (
-		"id"	INTEGER NOT NULL,
-		"created_date"	REAL,
-		"content"	TEXT,
-		PRIMARY KEY("id" AUTOINCREMENT)
+	@db.execute 'CREATE TABLE IF NOT EXISTS Posts 
+	(
+		id	INTEGER PRIMARY KEY AUTOINCREMENT,
+		created_date REAL,
+		content	TEXT
 	)'	
 end
 
@@ -35,11 +35,11 @@ post '/new' do
 	init_db
 	content = params[:content]
 
-	if content.to_s.length <= 0
+	if content.length <= 0
 		@error = 'Type post text'
 		return erb :new
 	end
 
-	@db.execute 'insert into Posts (content, created_date) values (?, datetime())' [content]
+	@db.execute 'insert into Posts ("content", "created_date") values (?, datetime())', [content]
 	erb "You typed: #{content}"
 end
