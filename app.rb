@@ -20,6 +20,15 @@ configure do
 		id	INTEGER PRIMARY KEY AUTOINCREMENT,
 		created_date REAL,
 		content	TEXT
+	)'
+	
+	
+	@db.execute 'CREATE TABLE IF NOT EXISTS Comments 
+	(
+		id	INTEGER PRIMARY KEY AUTOINCREMENT,
+		created_date REAL,
+		content	TEXT,
+		post_id INTEGER
 	)'	
 end
 
@@ -60,5 +69,5 @@ end
 post '/details/:post_id' do
 	post_id = params[:post_id]
 	content = params[:content]
-	erb "You typed comment #{comment} for post #{post_id}"
+	erb "You typed comment #{content} for post #{post_id}"
 end
